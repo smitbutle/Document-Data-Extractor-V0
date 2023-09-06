@@ -17,11 +17,14 @@ def ocr(path, file_name):
 	print(path,file_name)
 	results = pytesseract.image_to_data(im, output_type= Output.DICT)
 	extracted_data=[]
-
+	space_width = -1
 	# loop over each of the individual text localizations
 	for i in range(0, len(results["text"])):
 		# extract the bounding box coordinates of the text region from
 		# the current result
+		if(space_width==-1 and (results["text"][i] == " " or results["text"][i] == "  ")):
+			space_width = results["width"][i]
+			print(space_width)
 		if results["text"][i] == " " or results["text"][i] == "" or results["text"][i] == "  ":
 			continue
 		# if i==5:
@@ -78,7 +81,7 @@ def ocr(path, file_name):
 		x1, y1, x2, y2 = word_info['coordinates']
 
 		# Check if the current word is adjacent to the previous word
-		if current_key and (abs(current_key[-1][3] - x1) <= 30 and abs(current_key[-1][2] - y1) <= 3) :
+		if current_key and (abs(current_key[-1][3] - x1) <= 3*space_width and abs(current_key[-1][2] - y1) <= space_width) :
 			current_key.append((word, x1, y1, x2, y2))			
 
 		else:
@@ -133,7 +136,7 @@ def ocr(path, file_name):
 
 	
 	if image is not None and image.shape[0] > 0 and image.shape[1] > 0:
-		cv2.imwrite(file_name, image)
+		cv2.imwrite("./output_annoted/"+file_name, image)
 		# cv2.imshow("Image", image)
 		# cv2.waitKey(1)
 	else:
