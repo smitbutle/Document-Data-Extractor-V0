@@ -99,18 +99,18 @@ def ocr(path):
 	for i in merged_keys:
 		print(i)
 
-	# for key, boxes in merged_key.items():
-	# 	for box in boxes:
-	# 		word, x1, y1, x2, y2 = box
-	# 		cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)  # Draw a green rectangle
+	for key, boxes in merged_keys.items():
+		for box in boxes:
+			word, x1, y1, x2, y2 = box
+			cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)  # Draw a green rectangle
 
-	# 		# Put text label near the box
-	# 		cv2.putText(image, word, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+			# Put text label near the box
+			cv2.putText(image, word, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-	# # Display or save the image with bounding boxes
-	# cv2.imshow('Image with Bounding Boxes', image)
-	# cv2.waitKey(0)
-	# cv2.destroyAllWindows()	
+	# Display or save the image with bounding boxes
+	cv2.imshow('Image with Bounding Boxes', image)
+	cv2.waitKey(0)
+	cv2.destroyAllWindows()	
 
 	# Display the last merged multi-word entity
 	# if prev_word_coords is not None:
