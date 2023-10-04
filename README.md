@@ -1,6 +1,6 @@
 <div align="center">
 
-# Doc-KV-Extractor: Convert unstructured document to structured key-value data.
+# Doc-Data-Extractor: Convert unstructured document to structured key-value data.
 
 </div>
 
