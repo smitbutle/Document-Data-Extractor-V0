@@ -87,13 +87,17 @@ def scanDoc(image):
         max_allowed_difference = int(original_img.shape[0] * 0.5)
 
     # Compare dimensions of the original and warped images
+        
         if abs(original_img.shape[0] - warped.shape[0]) > max_allowed_difference or \
             abs(original_img.shape[1] - warped.shape[1]) > max_allowed_difference:
-            cv2.imwrite('./output/'+image,original_img)
+            cv2.imwrite('./output/'+image, original_img)
+            print("[Success (warp skipped)] ", image)
         else:
-            cv2.imwrite('./output/'+image,warped)
+            cv2.imwrite('./output/'+image, warped)
+            print("[Success] ", image)
     except:
         cv2.imwrite('./output/'+image,original_img)
+        print("[Success (preprocessing skipped)] ", image)
 
     # cv2.imshow("Final Scanned image", imutils.resize(warped, height=650))
     # cv2.waitKey(0)

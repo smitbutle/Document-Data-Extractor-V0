@@ -44,30 +44,30 @@ def ocr(path):
 			"word":text,
 			"coordinates":(x,y,w,h)
 		})
-		# conf = int(results["conf"][i])
-		# # filter out weak confidence text localizations
-		# # print(conf)
-		# if conf > min_conf:
-		# 	if prev_word_coords is None:
-		# 		prev_word_coords = (x, y, w, h)
-		# 		# print(prev_word_coords)
-		# 		merged_text = text
-		# 	else:
-		# 		# Check if the current word is adjacent to the previous word
-		# 		if x > prev_word_coords[0] + prev_word_coords[2]:
-		# 			# Draw bounding box and text for the merged multi-word entity
-		# 			cv2.rectangle(image, (prev_word_coords[0], prev_word_coords[1]),
-		# 						(x + w, y + h), (0, 255, 0), 2)
-		# 			cv2.putText(image, merged_text, (prev_word_coords[0], prev_word_coords[1] - 10),
-		# 						cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
+		conf = int(results["conf"][i])
+		# filter out weak confidence text localizations
+		# print(conf)
+		if conf > min_conf:
+			if prev_word_coords is None:
+				prev_word_coords = (x, y, w, h)
+				# print(prev_word_coords)
+				merged_text = text
+			else:
+				# Check if the current word is adjacent to the previous word
+				if x > prev_word_coords[0] + prev_word_coords[2]:
+					# Draw bounding box and text for the merged multi-word entity
+					cv2.rectangle(image, (prev_word_coords[0], prev_word_coords[1]),
+								(x + w, y + h), (0, 255, 0), 2)
+					cv2.putText(image, merged_text, (prev_word_coords[0], prev_word_coords[1] - 10),
+								cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
 					
-		# 			prev_word_coords = (x, y, w, h)
-		# 			merged_text = text
-		# 		else:
-		# 			prev_word_coords = (x, y, w + x - prev_word_coords[0], max(h, prev_word_coords[3]))
-		# 			merged_text += " " + text
-	# for i in extracted_data:
-	# 	print(i)
+					prev_word_coords = (x, y, w, h)
+					merged_text = text
+				else:
+					prev_word_coords = (x, y, w + x - prev_word_coords[0], max(h, prev_word_coords[3]))
+					merged_text += " " + text
+	for i in extracted_data:
+		print(i)
 
 	merged_keys = {}
 	current_key = []

@@ -14,7 +14,7 @@ def ocr(path, file_name):
 	
 	im = Image.open(path)
 	image = cv2.imread(path)
-	print(path,file_name)
+	# print(path,file_name)
 	results = pytesseract.image_to_data(im, output_type= Output.DICT)
 	extracted_data=[]
 	space_width = -1
@@ -24,7 +24,7 @@ def ocr(path, file_name):
 		# the current result
 		if(space_width==-1 and (results["text"][i] == " " or results["text"][i] == "  ")):
 			space_width = results["width"][i]
-			print(space_width)
+			# print(space_width)
 		if results["text"][i] == " " or results["text"][i] == "" or results["text"][i] == "  ":
 			continue
 		# if i==5:
@@ -137,6 +137,7 @@ def ocr(path, file_name):
 	
 	if image is not None and image.shape[0] > 0 and image.shape[1] > 0:
 		cv2.imwrite("./output_annoted/"+file_name, image)
+		print("[Success] ", file_name)
 		# cv2.imshow("Image", image)
 		# cv2.waitKey(1)
 	else:
@@ -148,13 +149,14 @@ def main():
 
 	input_folder_path = cwd+'/input'
 	input_folder_path = os.listdir(input_folder_path)
-	
+	print("[Preprocessing]")
 	for i in input_folder_path:
 		scanDoc(i)
 
 	output_folder_path = cwd+'/output'
 	output_folder_contents = os.listdir(output_folder_path)
-	
+	print("\n")
+	print("[Annotating preprocessed images]")
 	for i in output_folder_contents:
 		ocr(output_folder_path+'/'+i, i)
 
